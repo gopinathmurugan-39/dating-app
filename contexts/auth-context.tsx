@@ -42,7 +42,12 @@ export function AuthProvider ({children} : {children : React.ReactNode}) {
 	}, []);
 
 	async function signOut() {
-
+		try {
+			await supabase.auth.signOut()
+		}
+		catch(error) {
+			console.error("Error signing out", error);
+		}
 	};
 
 	return (
