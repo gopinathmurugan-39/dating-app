@@ -1,7 +1,18 @@
+"use client";
+
 import PhotoUpload from "@/components/PhotoUpload";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function EditProilePage() {
+	const [formData, setFormData] = useState({
+		full_name: "",
+		username: "",
+		bio: "",
+		gender: "male" as "male" | "female" | "other",
+		birthdate: "",
+		avatar_url: ""
+	})
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800">
 			<div className="container mx-auto px-4 py-8">
@@ -21,9 +32,22 @@ export default function EditProilePage() {
 							<div className="flex items-center space-x-6">
 								<div className="relative">
 									<div className="w-24 h-24 rounded-full overflow-hidden">
-										<Image className="w-full h-full object-cover" width={100} height={100} src={"/default-avatar.png"} alt={""}/>
+										<Image className="w-full h-full object-cover" width={100} height={100} src={formData.avatar_url === "" ? "/default-avatar.png" : formData.avatar_url} alt={""}/>
 									</div>
-									<PhotoUpload onPhotoUploaded={() => null} />
+									<PhotoUpload onPhotoUploaded={(url) => {
+										setFormData((prev) => ({ 
+											...prev,
+											avatar_url: url
+										 }))
+									}} />
+								</div>
+								<div>
+									<p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+										Upload a new profile picture
+									</p>
+									<p className="text-xs text-gray-500 dark:text-gray-500">
+										JPG, PNG or GIF. Max 5MB.
+									</p>
 								</div>
 							</div>
 						</div>
