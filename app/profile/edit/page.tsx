@@ -11,8 +11,8 @@ export default function EditProilePage() {
 		bio: "",
 		gender: "male" as "male" | "female" | "other",
 		birthdate: "",
-		avatar_url: ""
-	})
+		avatar_url: "",
+	});
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800">
 			<div className="container mx-auto px-4 py-8">
@@ -28,18 +28,32 @@ export default function EditProilePage() {
 				<div className="max-w-2xl mx-auto">
 					<form className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
 						<div className="mb-8">
-							<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Profile Picture</label>
+							<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+								Profile Picture
+							</label>
 							<div className="flex items-center space-x-6">
 								<div className="relative">
 									<div className="w-24 h-24 rounded-full overflow-hidden">
-										<Image className="w-full h-full object-cover" width={100} height={100} src={formData.avatar_url === "" ? "/default-avatar.png" : formData.avatar_url} alt={""}/>
+										<Image
+											className="w-full h-full object-cover"
+											width={100}
+											height={100}
+											src={
+												formData.avatar_url === ""
+													? "/default-avatar.png"
+													: formData.avatar_url
+											}
+											alt={""}
+										/>
 									</div>
-									<PhotoUpload onPhotoUploaded={(url) => {
-										setFormData((prev) => ({ 
-											...prev,
-											avatar_url: url
-										 }))
-									}} />
+									<PhotoUpload
+										onPhotoUploaded={(url) => {
+											setFormData((prev) => ({
+												...prev,
+												avatar_url: url,
+											}));
+										}}
+									/>
 								</div>
 								<div>
 									<p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
@@ -51,9 +65,12 @@ export default function EditProilePage() {
 								</div>
 							</div>
 						</div>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+							<div className=""></div>
+						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

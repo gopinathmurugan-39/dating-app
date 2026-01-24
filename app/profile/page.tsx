@@ -6,10 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-
-
 export default function ProfilePage() {
-
 	const [profile, setProfile] = useState<UserProfile | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -19,17 +16,14 @@ export default function ProfilePage() {
 			try {
 				const profileData = await GetCurrentUserProfile();
 				console.log(profileData);
-				if(profileData){
+				if (profileData) {
 					setProfile(profileData);
-				}
-				else{
+				} else {
 					setError("Failed to load profile");
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error("Error loading profile", error);
-			}
-			finally {
+			} finally {
 				setLoading(false);
 			}
 		}
@@ -37,19 +31,22 @@ export default function ProfilePage() {
 		loadProfile();
 	}, []);
 
-	function calculateAge (birthdate: string) {
+	function calculateAge(birthdate: string) {
 		const today = new Date();
 		const birthDate = new Date(birthdate);
 
 		let age = today.getFullYear() - birthDate.getFullYear();
 		const monthDiff = today.getMonth() - birthDate.getMonth();
 
-		if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+		if (
+			monthDiff < 0 ||
+			(monthDiff === 0 && today.getDate() < birthDate.getDate())
+		) {
 			return age--;
 		}
 
 		return age;
-	};
+	}
 
 	if (loading) {
 		return (
@@ -64,7 +61,7 @@ export default function ProfilePage() {
 		);
 	}
 
-	if(error || !profile) {
+	if (error || !profile) {
 		return (
 			<div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
 				<div className="text-center max-w-md mx-auto p-8">
@@ -75,7 +72,8 @@ export default function ProfilePage() {
 						Profile not found
 					</h2>
 					<p className="text-gray-600 dark:text-gray-400 mb-6">
-						{error || "Unable to load your profile. Please try again."}
+						{error ||
+							"Unable to load your profile. Please try again."}
 					</p>
 					<button
 						onClick={() => window.location.reload()}
@@ -107,18 +105,31 @@ export default function ProfilePage() {
 								<div className="flex items-center space-x-6 mb-8">
 									<div className="relative">
 										<div className="w-24 h-24 rounded-full overflow-hidden">
-											<Image className="w-full h-full object-cover" width={100} height={100} src={profile?.avatar_url || "/default-avatar.png"} alt={profile?.full_name || ""}/>
+											<Image
+												className="w-full h-full object-cover"
+												width={100}
+												height={100}
+												src={
+													profile?.avatar_url ||
+													"/default-avatar.png"
+												}
+												alt={profile?.full_name || ""}
+											/>
 										</div>
 									</div>
 									<div className="flex-1">
 										<h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-											{profile.full_name}, {calculateAge(profile.birthdate)}
+											{profile.full_name},{" "}
+											{calculateAge(profile.birthdate)}
 										</h2>
 										<p className="text-gray-600 dark:text-gray-400 mb-2">
 											@{profile.username}
 										</p>
 										<p className="text-sm text-gray-500 dark:text-gray-500">
-											Member since {new Date(profile.created_at).toLocaleDateString()}
+											Member since{" "}
+											{new Date(
+												profile.created_at,
+											).toLocaleDateString()}
 										</p>
 									</div>
 								</div>
@@ -138,7 +149,7 @@ export default function ProfilePage() {
 										<div className="grid grid-cols-2 gap-4">
 											<div>
 												<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-												Gender
+													Gender
 												</label>
 												<p className="text-gray-900 dark:text-white capitalize">
 													{profile.gender}
@@ -146,10 +157,12 @@ export default function ProfilePage() {
 											</div>
 											<div>
 												<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-												Birthday
+													Birthday
 												</label>
 												<p className="text-gray-900 dark:text-white">
-													{new Date(profile.birthdate).toLocaleDateString()}
+													{new Date(
+														profile.birthdate,
+													).toLocaleDateString()}
 												</p>
 											</div>
 										</div>
@@ -161,19 +174,32 @@ export default function ProfilePage() {
 										<div className="grid grid-cols-2 gap-4">
 											<div>
 												<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-												Age Range
+													Age Range
 												</label>
 												<p className="text-gray-900 dark:text-white">
-													{profile.preferences.age_range.min} -{" "}
-													{profile.preferences.age_range.max} years
+													{
+														profile.preferences
+															.age_range.min
+													}{" "}
+													-{" "}
+													{
+														profile.preferences
+															.age_range.max
+													}{" "}
+													years
 												</p>
 											</div>
 											<div>
 												<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-												Distance
+													Distance
 												</label>
 												<p className="text-gray-900 dark:text-white">
-													Up to {profile.preferences.distance} km
+													Up to{" "}
+													{
+														profile.preferences
+															.distance
+													}{" "}
+													km
 												</p>
 											</div>
 										</div>
@@ -194,17 +220,17 @@ export default function ProfilePage() {
 										<div className="flex items-center space-x-3">
 											<div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
 												<svg
-												className="w-4 h-4 text-white"
-												fill="none"
-												stroke="currentColor"
-												viewBox="0 0 24 24"
+													className="w-4 h-4 text-white"
+													fill="none"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
 												>
-												<path
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-												/>
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														strokeWidth={2}
+														d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+													/>
 												</svg>
 											</div>
 											<span className="text-gray-900 dark:text-white">
@@ -230,20 +256,20 @@ export default function ProfilePage() {
 
 							<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
 								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-								Account
+									Account
 								</h3>
 								<div className="space-y-3">
-								<div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
-									<span className="text-gray-900 dark:text-white">
-									Username
-									</span>
-									<span className="text-gray-500 dark:text-gray-400">
-									@{profile.username}
-									</span>
-								</div>
+									<div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
+										<span className="text-gray-900 dark:text-white">
+											Username
+										</span>
+										<span className="text-gray-500 dark:text-gray-400">
+											@{profile.username}
+										</span>
+									</div>
 								</div>
 							</div>
-							</div>
+						</div>
 					</div>
 				</div>
 			</div>

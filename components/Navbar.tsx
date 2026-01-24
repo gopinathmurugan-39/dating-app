@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/contexts/auth-context"
-import Link from "next/link"
+import { useAuth } from "@/contexts/auth-context";
+import Link from "next/link";
 
 export default function Navbar() {
 	const { signOut, user } = useAuth();
@@ -11,7 +11,7 @@ export default function Navbar() {
 				<div className="flex items-center justify-between h-16">
 					<Link href="/" className="flex items-center space-x-3">
 						<span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
-						StreamMatch
+							StreamMatch
 						</span>
 					</Link>
 
@@ -41,11 +41,11 @@ export default function Navbar() {
 							Profile
 						</Link>
 					</div>
-					{user ? 
+					{user ? (
 						<button
 							onClick={signOut}
 							className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-md hover:shadow-lg"
-							>
+						>
 							<svg
 								className="w-4 h-4 mr-1"
 								fill="none"
@@ -53,23 +53,24 @@ export default function Navbar() {
 								viewBox="0 0 24 24"
 							>
 								<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
 								/>
 							</svg>
 							Sign Out
-						</button> : 
+						</button>
+					) : (
 						<Link
 							href="/auth"
 							className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white text-sm font-medium rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
-							>
-								Sign In
+						>
+							Sign In
 						</Link>
-					}
+					)}
 				</div>
 			</div>
 		</nav>
-	)
+	);
 }
