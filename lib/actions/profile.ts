@@ -1,5 +1,6 @@
 "use server";
 
+import { UserProfile } from "@/interfaces/UserProfile";
 import { createClient } from "../supabase/server";
 
 export async function GetCurrentUserProfile() {
@@ -25,6 +26,42 @@ export async function GetCurrentUserProfile() {
 	}
 
 	return profile;
+}
+
+export async function updateUserProfile(profileData: Partial<UserProfile>) {
+	const supabase = await createClient();
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
+	if (!user) {
+		return {
+			success: false,
+			error: "User is not logged in",
+		};
+	}
+
+	const { error } = await supabase
+		.from("users")
+		.update({
+			full_name: profileData.full_name,
+			username: profileData.username,
+			bio: profileData.bio,
+			gender: profileData.gender,
+			birthdate: profileData.birthdate,
+			avatar_url: profileData.avatar_url,
+			updated_at: new Date().toISOString(),
+		})
+		.eq("id", user.id);
+	if (error) {
+		console.log(error);
+		return { success: false, error: error.message };
+	}
+
+	return {
+		success: true,
+	};
 }
 
 export async function uploadProfilePhoto(file: File) {

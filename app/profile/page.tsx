@@ -252,20 +252,19 @@ export default function ProfilePage() {
 										</svg>
 									</Link>
 								</div>
-							</div>
-
-							<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-									Account
-								</h3>
-								<div className="space-y-3">
-									<div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
-										<span className="text-gray-900 dark:text-white">
-											Username
-										</span>
-										<span className="text-gray-500 dark:text-gray-400">
-											@{profile.username}
-										</span>
+								<div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+									<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+										Account
+									</h3>
+									<div className="space-y-3">
+										<div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700">
+											<span className="text-gray-900 dark:text-white">
+												Username
+											</span>
+											<span className="text-gray-500 dark:text-gray-400">
+												@{profile.username}
+											</span>
+										</div>
 									</div>
 								</div>
 							</div>
