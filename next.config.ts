@@ -5,7 +5,11 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "*.supabase.co", // Use the hostname of your Supabase project URL
+				hostname: "*.supabase.co",
+			},
+			{
+				protocol: "https",
+				hostname: "images.unsplash.com",
 			},
 		],
 	},
