@@ -1,8 +1,10 @@
 "use client";
 
+import MatchButtons from "@/components/MatchButtons";
 import MatchCard from "@/components/MatchCard";
+import MatchNotifcation from "@/components/MatchNotification";
 import { UserProfile } from "@/interfaces/UserProfile";
-import { getPotentialMatches } from "@/lib/actions/matches";
+import { getPotentialMatches, likeUser } from "@/lib/actions/matches";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -10,6 +12,10 @@ export default function MatchesPage() {
 	const [potentialMatches, setPotentialMatches] = useState<UserProfile[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+	const [showMatchNotfication, setShowMatchNotification] =
+		useState<boolean>(false);
+	const [matchedUser, setMatchedUser] = useState<UserProfile | null>(null);
 
 	const router = useRouter();
 
@@ -26,6 +32,34 @@ export default function MatchesPage() {
 		}
 		loadUsers();
 	}, []);
+
+	async function handleLike() {
+		if (currentIndex < potentialMatches.length - 1) {
+			const likedUser = potentialMatches[currentIndex];
+
+			try {
+				const result = await likeUser(likedUser.id);
+
+				if (result?.isMatch) {
+					setMatchedUser(result.matchedUser!);
+					setShowMatchNotification(true);
+				}
+
+				setCurrentIndex((prev) => prev + 1);
+			} catch (err) {
+				console.error(err);
+			}
+		}
+	}
+
+	function handlePass() {
+		if (currentIndex < potentialMatches?.length - 1)
+			setCurrentIndex((prev) => prev + 1);
+	}
+
+	function handleCloseMatchNotif() {}
+
+	function handleStartChat() {}
 
 	if (loading) {
 		return (
@@ -81,7 +115,18 @@ export default function MatchesPage() {
 
 				<div className="max-w-md mx-auto">
 					<MatchCard user={currentPotentialMatch} />
+					<div className="mt-8">
+						<MatchButtons onLike={handleLike} onPass={handlePass} />
+					</div>
 				</div>
+
+				{showMatchNotfication && matchedUser && (
+					<MatchNotifcation
+						match={matchedUser}
+						onClose={handleCloseMatchNotif}
+						onStartChat={handleStartChat}
+					/>
+				)}
 			</div>
 		</div>
 	);
